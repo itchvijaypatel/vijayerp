@@ -70,6 +70,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'user_app',
     'main_app',
+    'company_app',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -102,7 +105,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "VIJAYERP.wsgi.application"
 
-
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ]
+}
 
 # settings.py
 AUTH_USER_MODEL = 'user_app.Erp_User'
