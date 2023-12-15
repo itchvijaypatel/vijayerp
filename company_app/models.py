@@ -1,12 +1,12 @@
 from django.db import models
-from main_app.models import BusinessSubCategory
+from main_app.models import *
 
 from user_app.models import *
 
 # Create your models here.
 class Company(models.Model):
     
-    erp_user=models.OneToOneField(Erp_User,on_delete=models.CASCADE)
+    user=models.OneToOneField(Erp_User,on_delete=models.CASCADE)
     qr_code_image = models.ImageField(upload_to='qr_code', blank=True,null=True)
     qr_code_unique_no=models.CharField(max_length=250,null=True,blank=True,unique=True)
     business_type = models.ForeignKey(BusinessSubCategory,null=True, blank=True,on_delete=models.CASCADE) 
@@ -85,8 +85,23 @@ class Company(models.Model):
     is_real_time_sync=models.BooleanField(default=False)
     
     is_active_status=models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
 
     
  
     def __str__(self):
         return str(self.name) +" | " + str(self.id)  +" | " + str(self.erp_user)
+
+
+   
+class Company_Purchase_Plan(models.Model):
+    company=models.ForeignKey(Company,on_delete=models.CASCADE,null=True,blank=True)
+    erp_plan = models.ForeignKey(Erp_Plan,on_delete=models.CASCADE,null=True,blank=True)
+    is_active=models.BooleanField(default=False)
+    purchase_date=models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return str(self.company.id) + "|" + str(self.erp_plan) + "|" +str(self.is_active)
+    

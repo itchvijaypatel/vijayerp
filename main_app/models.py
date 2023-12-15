@@ -1,8 +1,9 @@
 from django.db import models
-
+from django.contrib.sessions.models import Session
 from user_app.models import Erp_User
-
+from django.contrib.auth.models import Group
 # Create your models here.
+
 
 # Business Category Section 
 class BusinessCategory(models.Model):
@@ -76,6 +77,24 @@ class TaxCurrencySymbol(models.Model):
     
     def __str__(self):
         return str(self.country.country) +" "+ str(self.symbol) 
+
+
+
+class Erp_Plan(models.Model):
+    plan_name=models.CharField(max_length=255,unique=True)#Make one plan type ERP
+    monthly_price = models.FloatField(default=0.00)
+    yearly_price = models.FloatField(default=0.00)
+    no_of_user=models.IntegerField()
+    module=models.ManyToManyField(Group,blank=True)
+ 
+    def __str__(self):
+        return self.plan_name
+    
+    def save(self,*args,**kwargs):
+        self.plan_name = self.plan_name.upper()
+        return super(Erp_Plan,self).save(*args,**kwargs)
+      
+   
 
 
 

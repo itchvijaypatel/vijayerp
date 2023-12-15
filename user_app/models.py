@@ -29,6 +29,10 @@ class Erp_User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_employee = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now=True,null=True,blank=True)
+    updated_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+
 
     objects = Erp_UserManager()
 
